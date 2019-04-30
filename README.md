@@ -6,7 +6,7 @@ health checks to monitor an application deployed to
 [Cloud Foundry](https://cloudfoundry.org) or Kubernetes.
 
 A Spring Boot app using `spring-boot-starter-actuator` dependency
-will get get an endpoint under `/actuator/health` for free,
+will get an endpoint under `/actuator/health` for free,
 which will return a `200 OK` HTTP page when the app is ready to serve
 traffic:
 ```xml
@@ -69,20 +69,20 @@ Hit http://localhost:8080/getdown to update application status, and see how the 
 ```
 
 If you hit `http://localhost:8080/actuator/health`, you can see the
-Spring Boot healthcheck endpoint:
+Spring Boot health check endpoint:
 ```bash
 $ curl http://localhost:8080/actuator/health
 {"status":"UP"}%
 ```
 
 Now, if you go to `http://localhost:8080/getdown`, this endpoint will
-set the custom healtcheck status to `DOWN`:
+set the custom health check status to `DOWN`:
 ```bash
 $ curl http://localhost:8080/getdown
 Application status set to DOWN%
 ```
 
-The Spring Boot healthcheck is now returning the updated status:
+The Spring Boot health check is now returning the updated status:
 ```bash
 $ curl http://localhost:8080/actuator/health
 {"status":"DOWN"}%
