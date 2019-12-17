@@ -17,17 +17,14 @@
 package fr.alexandreroman.demos.springhealthcheckdemo;
 
 import lombok.Data;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ApplicationTests {
     @LocalServerPort
@@ -41,18 +38,18 @@ public class ApplicationTests {
 
     @Test
     public void testIndex() {
-        final String index = restTemplate.getForObject("http://localhost:" + port, String.class);
+        final String index = restTemplate.getForObject("/", String.class);
         assertThat(index).contains("Application status: UP");
         assertThat(index).contains("http://localhost:" + port + "/getdown");
     }
 
     @Test
     public void testHealthCheck() {
-        final HealthStatus health = restTemplate.getForObject("http://localhost:" + port + "/actuator/health", HealthStatus.class);
+        final HealthStatus health = restTemplate.getForObject("/actuator/health", HealthStatus.class);
         assertThat(health.status).isEqualTo("UP");
-        restTemplate.getForObject("http://localhost:" + port + "/getdown", String.class);
+        restTemplate.getForObject("/getdown", String.class);
 
-        final HealthStatus newHealth = restTemplate.getForObject("http://localhost:" + port + "/actuator/health", HealthStatus.class);
+        final HealthStatus newHealth = restTemplate.getForObject("/actuator/health", HealthStatus.class);
         assertThat(newHealth.status).isEqualTo("DOWN");
     }
 
