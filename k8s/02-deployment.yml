@@ -5,7 +5,7 @@ metadata:
   name: app
   namespace: spring-healthcheck-demo
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       role: app

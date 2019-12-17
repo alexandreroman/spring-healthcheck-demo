@@ -3,6 +3,7 @@ applications:
   - name: spring-healthcheck-demo
     path: target/spring-healthcheck-demo.jar
     random-route: true
+    instances: 3
     # You need to set these entries to tell Cloud Foundry how to monitor this app:
     # Spring Boot automatically exposes an HTTP endpoint for you.
     health-check-type: http
