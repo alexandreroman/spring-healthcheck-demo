@@ -8,5 +8,7 @@ applications:
     # Spring Boot automatically exposes an HTTP endpoint for you.
     health-check-type: http
     health-check-http-endpoint: /actuator/health
+    buildpacks:
+      - java_buildpack_offline
     env:
       JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ } }'
