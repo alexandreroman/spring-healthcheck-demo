@@ -31,6 +31,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 @SpringBootApplication
 public class Application {
     public static void main(String[] args) {
@@ -47,14 +49,14 @@ class IndexController {
     @GetMapping(value = "/", produces = MimeTypeUtils.TEXT_PLAIN_VALUE)
     String index() {
         final String url = MvcUriComponentsBuilder.fromMethodName(IndexController.class, "getDown").build().toUriString();
-        return "Application status: " + (status.isLive() ? "UP" : "DOWN")
+        return "Application status: " + (status.live.get() ? "UP" : "DOWN")
                 + "\nHit " + url + " to update application status, and see how the platform reacts to this update.";
     }
 
     @GetMapping(value = "/getdown", produces = MimeTypeUtils.TEXT_PLAIN_VALUE)
     String getDown() {
         log.info("Updating application status: DOWN");
-        status.setLive(false);
+        status.live.set(false);
         return "Application status set to DOWN";
     }
 }
@@ -76,12 +78,12 @@ class AppConfig {
 
     @Bean
     HealthIndicator healthIndicator() {
-        return () -> status.isLive() ? Health.up().build() : Health.down().build();
+        return () -> status.live.get() ? Health.up().build() : Health.down().build();
     }
 }
 
 @Data
 @Component
 class AppStatus {
-    private boolean live = true;
+    public final AtomicBoolean live = new AtomicBoolean(true);
 }
