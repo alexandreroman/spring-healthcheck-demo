@@ -59,6 +59,16 @@ class IndexController {
     }
 }
 
+@RestController
+@Slf4j
+class KillController {
+    @GetMapping("/kill")
+    void kill() {
+        log.info("Killing application process");
+        System.exit(0);
+    }
+}
+
 @Configuration
 @RequiredArgsConstructor
 class AppConfig {
