@@ -51,7 +51,7 @@ which is initialized from a custom value.
 
 ## How to use it?
 
-You need a JDK 8+ to build this app:
+You need a JDK 11+ to build this app:
 ```bash
 $ ./mvnw clean package
 ```
@@ -128,7 +128,7 @@ livenessProbe:
         path: /actuator/health
     initialDelaySeconds: 60
     periodSeconds: 2
-    readinessProbe:
+readinessProbe:
     # Readiness probe is used to check if this app is ready to serve traffic.
     httpGet:
         port: 8080
