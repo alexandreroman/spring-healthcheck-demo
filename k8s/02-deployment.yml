@@ -18,6 +18,9 @@ spec:
         - name: app
           image: alexandreroman/spring-healthcheck-demo
           imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              memory: 1Gi
           ports:
             - containerPort: 8080
           livenessProbe:
